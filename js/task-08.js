@@ -3,24 +3,26 @@
 const form = document.querySelector(".login-form");
 const inputForm = form.querySelector("input");
 const buttonSubmit = document.querySelector("button");
-buttonSubmit.addEventListener("click", submit);
+form.addEventListener("submit", submit);
 
 function submit(event) {
   event.preventDefault();
-
-  if (inputForm.value === "") {
+  console.dir(event.target.elements);
+  const { email, password } = event.target.elements;
+  if (email.value === "") {
+    alert("All fields must be filled!");
+    return;
+  }
+  if (password.value === "") {
     alert("All fields must be filled!");
     return;
   }
 
-  const elements = form.elements;
-  const resForm = {};
-  for (let i = 0; i < elements.length; i += 1) {
-    const element = elements[i];
-    if (element.type !== "submit") {
-      resForm[element.name] = element.value;
-    }
-  }
+  const resForm = {
+    [email.name]: email.value,
+    [password.name]: password.value,
+  };
+
   console.log(resForm);
   form.reset();
 }
